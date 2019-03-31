@@ -1,10 +1,4 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
-/e2e
-/node_modules
-/src
-/*.json
-/*.md
-/*.swp
 
 # compiled output
 /dist
