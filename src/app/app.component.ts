@@ -13,6 +13,15 @@ import { About } from 'template/structural/bridge/About';
 import { LightTheme } from 'template/structural/bridge/LightTheme';
 import { DarkTheme } from 'template/structural/bridge/DarkTheme';
 import { Contacts } from 'template/structural/bridge/Contacts';
+import { Company } from 'template/structural/composite/company';
+import { Disigner } from 'template/structural/composite/disigner';
+import { Developer } from 'template/structural/composite/developer';
+import { SimpleService } from 'template/structural/decorator/SimpleService';
+import { ManikurService } from 'template/structural/decorator/manikurService';
+import { PC } from 'template/structural/facade/computer';
+import { ComputerFacade } from 'template/structural/facade/computerFacade';
+import { TeaProducer } from 'template/structural/flywaight/teaProducer';
+import { TeaShop } from 'template/structural/flywaight/teaShop';
 
 @Component({
   selector: 'app-root',
@@ -57,6 +66,30 @@ export class AppComponent implements OnInit{
     const contacts: About = new Contacts(new DarkTheme());
     console.log(about.getContent());
     console.log(contacts.getContent());
+    console.log('%c -- Composite --', 'color: blue');
+    const company = new Company();
+    company.addEmployer(new Disigner('Felix', 2400));
+    company.addEmployer(new Disigner('Eugen', 400));
+    company.addEmployer(new Developer('Mike'));
+    company.addEmployer(new Developer('Dulittle', 7000));
+    company.getNetSlary();
+    console.log('%c -- Decorator --', 'color: blue');
+    const simpleService = new SimpleService();
+    const manikur = new ManikurService(simpleService);
+    console.log(simpleService.getSescription() + ': ' +  simpleService.getCost());
+    console.log(manikur.getSescription() + ': ' +  manikur.getCost());
+    console.log('%c -- Facade --', 'color: blue');
+    const compFacade = new ComputerFacade(new PC());
+    compFacade.turnOn();
+    compFacade.turnOff();
+    console.log('%c -- Fliwaight --', 'color: blue');
+    const teeProducer = new TeaProducer();
+    const teaShop = new TeaShop(teeProducer);
+    teaShop.takeOrder('with shugar', 1);
+    teaShop.takeOrder('without shugar', 2);
+    teaShop.takeOrder('with milk', 3);
+    teaShop.takeOrder('double', 8);
+    teaShop.serve();
   }
 
 }
